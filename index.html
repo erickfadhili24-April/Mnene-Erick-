@@ -376,6 +376,81 @@
             z-index: 50;
         }
 
+        .qr-section {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .qr-section.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .qr-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .qr-code {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            border: 2px solid #764ba2;
+        }
+
+        .share-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .share-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+        }
+
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+        }
+
+        .facebook-btn {
+            background: #1877F2;
+            color: white;
+        }
+
+        .twitter-btn {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+        }
+
         @media (max-width: 600px) {
             .card {
                 padding: 25px;
@@ -402,6 +477,14 @@
                 height: 50px;
                 bottom: 15px;
                 right: 15px;
+            }
+
+            .share-options {
+                flex-direction: column;
+            }
+
+            .share-btn {
+                min-width: auto;
             }
         }
     </style>
@@ -483,10 +566,28 @@
                         Click to copy link...
                     </div>
                     <div class="copy-feedback" id="copyFeedback">✓ Copied to clipboard!</div>
-                    
-                    <div style="margin-top: 15px; text-align: center;">
-                        <button class="btn-share" onclick="shareViaWhatsApp()" style="background: #25D366; color: white; border: none; margin-bottom: 8px;">
-                            📱 Share via WhatsApp
+
+                    <!-- QR Code Section -->
+                    <div class="qr-section" id="qrSection">
+                        <div class="qr-label">📱 Scan QR Code to share:</div>
+                        <div class="qr-code">
+                            <img id="qrImage" src="" alt="QR Code" style="max-width: 200px; width: 100%;">
+                        </div>
+                    </div>
+
+                    <!-- Social Share Options -->
+                    <div class="share-options">
+                        <button class="share-btn whatsapp-btn" onclick="shareViaWhatsApp()">
+                            📱 WhatsApp
+                        </button>
+                        <button class="share-btn telegram-btn" onclick="shareViaTelegram()">
+                            ✈️ Telegram
+                        </button>
+                        <button class="share-btn facebook-btn" onclick="shareViaFacebook()">
+                            f Facebook
+                        </button>
+                        <button class="share-btn twitter-btn" onclick="shareViaTwitter()">
+                            𝕏 Twitter
                         </button>
                     </div>
                 </div>
@@ -499,13 +600,7 @@
         <span id="audioIcon">🔊</span>
     </div>
 
-    <!-- Hidden Audio Elements -->
-    <audio id="bgMusic" loop>
-        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
-    </audio>
-    <audio id="openSound"></audio>
-    <audio id="clickSound"></audio>
-    <audio id="successSound"></audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <script>
         // Festive Audio Setup
@@ -703,7 +798,24 @@
             
             document.getElementById('shareLink').textContent = shareUrl;
             document.getElementById('linkSection').classList.add('show');
+            
+            // Generate QR Code
+            generateQRCode(shareUrl);
+            
             createParticles();
+        }
+
+        function generateQRCode(text) {
+            const qrSection = document.getElementById('qrSection');
+            const qrImage = document.getElementById('qrImage');
+            
+            // Clear previous QR code
+            qrImage.src = '';
+            
+            // Create QR code using QR Server API (no library needed)
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+            qrImage.src = qrUrl;
+            qrSection.classList.add('show');
         }
 
         function copyToClipboard() {
@@ -728,6 +840,36 @@
             
             const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
+        }
+
+        function shareViaTelegram() {
+            if (sounds) sounds.playClick();
+            const nextRecipient = document.getElementById('nextRecipient').value.trim();
+            const link = document.getElementById('shareLink').textContent;
+            
+            const message = `🔥 ZIM 2026 INREACH GOSPEL MISSION 🔥\n\nTWENZETU CHINANGALI\n\nHey ${nextRecipient}! Gospel blessing:\n"na wote wenye mwili watauona wokovu wa Bwana" (Luke 3:6)\n\n${link}`;
+            
+            const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(message)}`;
+            window.open(telegramUrl, '_blank');
+        }
+
+        function shareViaFacebook() {
+            if (sounds) sounds.playClick();
+            const link = document.getElementById('shareLink').textContent;
+            
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+            window.open(facebookUrl, '_blank');
+        }
+
+        function shareViaTwitter() {
+            if (sounds) sounds.playClick();
+            const nextRecipient = document.getElementById('nextRecipient').value.trim();
+            const link = document.getElementById('shareLink').textContent;
+            
+            const message = `🔥 ZIM 2026 INREACH GOSPEL MISSION 🔥\n\nHey ${nextRecipient}! Gospel blessing for you:\n"na wote wenye mwili watauona wokovu wa Bwana" (Luke 3:6)\n\n${link}`;
+            
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+            window.open(twitterUrl, '_blank');
         }
 
         function startNewGreeting() {
