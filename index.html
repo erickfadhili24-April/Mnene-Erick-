@@ -19,6 +19,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow: hidden;
         }
 
         .container {
@@ -33,6 +34,7 @@
             padding: 40px;
             text-align: center;
             animation: slideIn 0.8s ease-out;
+            position: relative;
         }
 
         @keyframes slideIn {
@@ -46,10 +48,39 @@
             }
         }
 
+        /* Particle effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 24px;
+            animation: float 3s ease-in infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         .fire-emoji {
-            font-size: 48px;
+            font-size: 64px;
             margin-bottom: 20px;
-            animation: bounce 1s ease-in-out infinite;
+            animation: bounce 1s ease-in-out infinite, pulse 2s ease-in-out infinite;
+            display: inline-block;
         }
 
         @keyframes bounce {
@@ -57,7 +88,16 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-10px);
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.8));
             }
         }
 
@@ -66,6 +106,16 @@
             font-size: 28px;
             margin-bottom: 10px;
             letter-spacing: 1px;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+            }
         }
 
         .subtitle {
@@ -73,6 +123,7 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 25px;
+            animation: slideIn 1s ease-out 0.2s backwards;
         }
 
         .verse-section {
@@ -81,6 +132,7 @@
             border-radius: 15px;
             margin-bottom: 30px;
             border-left: 5px solid #764ba2;
+            animation: slideIn 1s ease-out 0.4s backwards;
         }
 
         .verse-reference {
@@ -102,10 +154,11 @@
         }
 
         .recipient-name {
-            font-size: 24px;
+            font-size: 32px;
             color: #764ba2;
             font-weight: 700;
             margin-bottom: 20px;
+            animation: slideIn 0.8s ease-out;
         }
 
         .greeting-text {
@@ -113,6 +166,7 @@
             color: #555;
             margin-bottom: 25px;
             line-height: 1.6;
+            animation: slideIn 1s ease-out 0.2s backwards;
         }
 
         .input-section {
@@ -147,6 +201,8 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            z-index: 10;
+            position: relative;
         }
 
         button {
@@ -169,6 +225,22 @@
         .btn-send:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-send:active {
+            animation: buttonClick 0.3s ease;
+        }
+
+        @keyframes buttonClick {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
         .btn-share {
@@ -242,6 +314,7 @@
             color: #555;
             margin-bottom: 20px;
             line-height: 1.6;
+            animation: slideIn 1s ease-out 0.4s backwards;
         }
 
         .start-btn {
@@ -250,11 +323,57 @@
             padding: 15px 40px;
             font-size: 18px;
             width: 100%;
+            animation: slideIn 1s ease-out 0.6s backwards;
         }
 
         .start-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: 3px solid #764ba2;
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+        }
+
+        .audio-control.muted {
+            opacity: 0.6;
+        }
+
+        .audio-control.playing {
+            animation: audioPulse 0.5s ease infinite;
+        }
+
+        @keyframes audioPulse {
+            0%, 100% {
+                box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
+            }
+            50% {
+                box-shadow: 0 5px 25px rgba(118, 75, 162, 0.6);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 50;
         }
 
         @media (max-width: 600px) {
@@ -275,13 +394,22 @@
             }
 
             .recipient-name {
-                font-size: 20px;
+                font-size: 24px;
+            }
+
+            .audio-control {
+                width: 50px;
+                height: 50px;
+                bottom: 15px;
+                right: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="particles" id="particlesContainer"></div>
+
+    <div class="container" style="position: relative; z-index: 10;">
         <div class="card">
             <!-- Initial Welcome Screen -->
             <div class="initial-section show">
@@ -366,7 +494,149 @@
         </div>
     </div>
 
+    <!-- Audio Control Button -->
+    <div class="audio-control playing" id="audioControl" onclick="toggleAudio()">
+        <span id="audioIcon">🔊</span>
+    </div>
+
+    <!-- Hidden Audio Elements -->
+    <audio id="bgMusic" loop>
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+    <audio id="openSound"></audio>
+    <audio id="clickSound"></audio>
+    <audio id="successSound"></audio>
+
     <script>
+        // Festive Audio Setup
+        let audioEnabled = true;
+        let bgMusicPlaying = false;
+
+        // Create festive sounds using Web Audio API
+        function createFestiveAudio() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            // Christmas/Festive bell sound
+            function playBell(frequency = 880, duration = 0.3) {
+                const now = audioContext.currentTime;
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.frequency.value = frequency;
+                osc.type = 'sine';
+                
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+                
+                osc.start(now);
+                osc.stop(now + duration);
+            }
+
+            // Joyful ascending tones
+            function playChime() {
+                playBell(523.25, 0.2); // C
+                setTimeout(() => playBell(659.25, 0.2), 150); // E
+                setTimeout(() => playBell(783.99, 0.3), 300); // G
+            }
+
+            // Success sound (ascending notes)
+            function playSuccess() {
+                playBell(659.25, 0.15);
+                setTimeout(() => playBell(783.99, 0.15), 100);
+                setTimeout(() => playBell(1046.50, 0.25), 200);
+            }
+
+            // Click sound
+            function playClick() {
+                const now = audioContext.currentTime;
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(200, now + 0.1);
+                osc.type = 'square';
+                
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                
+                osc.start(now);
+                osc.stop(now + 0.1);
+            }
+
+            // Festive background music (simple melody)
+            function playBackgroundMusic() {
+                const notes = [
+                    { freq: 523.25, duration: 0.3 }, // C
+                    { freq: 659.25, duration: 0.3 }, // E
+                    { freq: 783.99, duration: 0.3 }, // G
+                    { freq: 659.25, duration: 0.3 }, // E
+                    { freq: 783.99, duration: 0.3 }, // G
+                    { freq: 987.77, duration: 0.3 }, // B
+                    { freq: 783.99, duration: 0.6 }, // G
+                ];
+
+                function playNote(index) {
+                    if (index >= notes.length || !bgMusicPlaying) return;
+                    
+                    const note = notes[index];
+                    const now = audioContext.currentTime;
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    
+                    osc.frequency.value = note.freq;
+                    osc.type = 'sine';
+                    
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + note.duration);
+                    
+                    osc.start(now);
+                    osc.stop(now + note.duration);
+                    
+                    setTimeout(() => playNote(index + 1), note.duration * 1000);
+                }
+
+                playNote(0);
+            }
+
+            return { playChime, playSuccess, playClick, playBackgroundMusic };
+        }
+
+        let sounds;
+        document.addEventListener('click', () => {
+            if (!sounds) {
+                sounds = createFestiveAudio();
+            }
+        }, { once: true });
+
+        // Particle effects for festive atmosphere
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            const particles = ['🎉', '✨', '⭐', '🎊', '🎈', '💫'];
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    container.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 3000);
+                }, i * 100);
+            }
+        }
+
         // Get URL parameters
         function getUrlParameter(name) {
             const url = new URL(window.location);
@@ -378,14 +648,30 @@
             const recipientFromUrl = getUrlParameter('to');
             if (recipientFromUrl) {
                 showGreeting(decodeURIComponent(recipientFromUrl));
+                if (sounds) sounds.playChime();
             }
+            startBackgroundMusic();
         });
 
+        function startBackgroundMusic() {
+            if (audioEnabled && sounds) {
+                bgMusicPlaying = true;
+                sounds.playBackgroundMusic();
+                setInterval(() => {
+                    if (bgMusicPlaying && sounds) {
+                        sounds.playBackgroundMusic();
+                    }
+                }, 3000);
+            }
+        }
+
         function startGreeting() {
+            if (sounds) sounds.playChime();
             document.querySelector('.initial-section').classList.remove('show');
             document.querySelector('.greeting-section').style.display = 'block';
             setTimeout(() => {
                 document.querySelector('.greeting-section').style.animation = 'slideIn 0.8s ease-out';
+                createParticles();
             }, 10);
             document.getElementById('recipientName').textContent = 'Friend';
             document.getElementById('nextRecipient').value = '';
@@ -393,11 +679,13 @@
         }
 
         function showGreeting(name) {
+            if (sounds) sounds.playChime();
             document.querySelector('.initial-section').classList.remove('show');
             document.querySelector('.greeting-section').style.display = 'block';
             document.getElementById('recipientName').textContent = name;
             document.getElementById('nextRecipient').value = '';
             document.getElementById('linkSection').classList.remove('show');
+            createParticles();
         }
 
         function generateLink() {
@@ -408,16 +696,21 @@
                 return;
             }
 
+            if (sounds) sounds.playSuccess();
+
             const baseUrl = window.location.origin + window.location.pathname;
             const shareUrl = baseUrl + '?to=' + encodeURIComponent(nextRecipient);
             
             document.getElementById('shareLink').textContent = shareUrl;
             document.getElementById('linkSection').classList.add('show');
+            createParticles();
         }
 
         function copyToClipboard() {
+            if (sounds) sounds.playClick();
             const link = document.getElementById('shareLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
+                if (sounds) sounds.playSuccess();
                 const feedback = document.getElementById('copyFeedback');
                 feedback.classList.add('show');
                 setTimeout(() => {
@@ -427,6 +720,7 @@
         }
 
         function shareViaWhatsApp() {
+            if (sounds) sounds.playClick();
             const nextRecipient = document.getElementById('nextRecipient').value.trim();
             const link = document.getElementById('shareLink').textContent;
             
@@ -437,8 +731,26 @@
         }
 
         function startNewGreeting() {
+            if (sounds) sounds.playClick();
             document.querySelector('.greeting-section').style.display = 'none';
             document.querySelector('.initial-section').classList.add('show');
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const control = document.getElementById('audioControl');
+            const icon = document.getElementById('audioIcon');
+            
+            if (audioEnabled) {
+                control.classList.add('playing');
+                icon.textContent = '🔊';
+                bgMusicPlaying = true;
+                if (sounds) sounds.playBackgroundMusic();
+            } else {
+                control.classList.remove('playing');
+                icon.textContent = '🔇';
+                bgMusicPlaying = false;
+            }
         }
     </script>
 </body>
