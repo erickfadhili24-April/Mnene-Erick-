@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIM 2026 INREACH GOSPEL MISSION</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            text-align: center;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fire-emoji {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 28px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #667eea;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .verse-section {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #764ba2;
+        }
+
+        .verse-reference {
+            color: #764ba2;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .verse-text {
+            color: #333;
+            font-size: 18px;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .recipient-section {
+            margin: 30px 0;
+        }
+
+        .recipient-name {
+            font-size: 24px;
+            color: #764ba2;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .greeting-text {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .input-section {
+            margin: 30px 0;
+        }
+
+        .input-label {
+            display: block;
+            color: #764ba2;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 10px rgba(118, 75, 162, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-share {
+            background: #f0f0f0;
+            color: #764ba2;
+            border: 2px solid #764ba2;
+        }
+
+        .btn-share:hover {
+            background: #764ba2;
+            color: white;
+        }
+
+        .link-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .link-section.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .link-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .copy-link {
+            width: 100%;
+            padding: 10px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            color: #333;
+            font-size: 12px;
+            word-break: break-all;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-link:hover {
+            background: #efefef;
+        }
+
+        .copy-feedback {
+            color: #667eea;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .copy-feedback.show {
+            display: block;
+        }
+
+        .initial-section {
+            display: none;
+        }
+
+        .initial-section.show {
+            display: block;
+        }
+
+        .welcome-text {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            width: 100%;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .verse-text {
+                font-size: 16px;
+            }
+
+            .recipient-name {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- Initial Welcome Screen -->
+            <div class="initial-section show">
+                <div class="fire-emoji">🔥</div>
+                <h1>ZIM 2026 INREACH GOSPEL MISSION</h1>
+                <div class="subtitle">TWENZETU CHINANGALI</div>
+                
+                <div class="verse-section">
+                    <div class="verse-reference">LUKA 3:6</div>
+                    <div class="verse-text">
+                        "na wote wenye mwili watauona wokovu wa Bwana"
+                    </div>
+                </div>
+
+                <div class="welcome-text">
+                    You have been chosen to receive this blessing! 
+                    <br><br>
+                    Pass this Gospel mission to someone special in your life.
+                </div>
+
+                <button class="btn-send start-btn" onclick="startGreeting()">
+                    💌 Open Blessing
+                </button>
+            </div>
+
+            <!-- Main Greeting Screen -->
+            <div class="greeting-section" style="display: none;">
+                <div class="fire-emoji">🔥</div>
+                <h1>ZIM 2026 INREACH GOSPEL MISSION</h1>
+                <div class="subtitle">TWENZETU CHINANGALI</div>
+                
+                <div class="verse-section">
+                    <div class="verse-reference">LUKA 3:6</div>
+                    <div class="verse-text">
+                        "na wote wenye mwili watauona wokovu wa Bwana"
+                    </div>
+                </div>
+
+                <div class="recipient-section">
+                    <div class="greeting-text">
+                        Dear <span class="recipient-name" id="recipientName">Friend</span>,
+                        <br><br>
+                        May this Gospel mission reach your heart! 
+                        <br>
+                        Share this blessing with someone you love.
+                    </div>
+                </div>
+
+                <div class="input-section">
+                    <label class="input-label">Pass this to (Enter name):</label>
+                    <input 
+                        type="text" 
+                        id="nextRecipient" 
+                        placeholder="Enter the name of the next person"
+                        onkeypress="if(event.key==='Enter') generateLink()"
+                    >
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-send" onclick="generateLink()">
+                        ✉️ Generate Link
+                    </button>
+                    <button class="btn-share" onclick="startNewGreeting()">
+                        🔄 Start Over
+                    </button>
+                </div>
+
+                <div class="link-section" id="linkSection">
+                    <div class="link-label">📎 Share this link with the person above:</div>
+                    <div class="copy-link" id="shareLink" onclick="copyToClipboard()">
+                        Click to copy link...
+                    </div>
+                    <div class="copy-feedback" id="copyFeedback">✓ Copied to clipboard!</div>
+                    
+                    <div style="margin-top: 15px; text-align: center;">
+                        <button class="btn-share" onclick="shareViaWhatsApp()" style="background: #25D366; color: white; border: none; margin-bottom: 8px;">
+                            📱 Share via WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        function getUrlParameter(name) {
+            const url = new URL(window.location);
+            return url.searchParams.get(name);
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            const recipientFromUrl = getUrlParameter('to');
+            if (recipientFromUrl) {
+                showGreeting(decodeURIComponent(recipientFromUrl));
+            }
+        });
+
+        function startGreeting() {
+            document.querySelector('.initial-section').classList.remove('show');
+            document.querySelector('.greeting-section').style.display = 'block';
+            setTimeout(() => {
+                document.querySelector('.greeting-section').style.animation = 'slideIn 0.8s ease-out';
+            }, 10);
+            document.getElementById('recipientName').textContent = 'Friend';
+            document.getElementById('nextRecipient').value = '';
+            document.getElementById('linkSection').classList.remove('show');
+        }
+
+        function showGreeting(name) {
+            document.querySelector('.initial-section').classList.remove('show');
+            document.querySelector('.greeting-section').style.display = 'block';
+            document.getElementById('recipientName').textContent = name;
+            document.getElementById('nextRecipient').value = '';
+            document.getElementById('linkSection').classList.remove('show');
+        }
+
+        function generateLink() {
+            const nextRecipient = document.getElementById('nextRecipient').value.trim();
+            
+            if (!nextRecipient) {
+                alert('Please enter a name!');
+                return;
+            }
+
+            const baseUrl = window.location.origin + window.location.pathname;
+            const shareUrl = baseUrl + '?to=' + encodeURIComponent(nextRecipient);
+            
+            document.getElementById('shareLink').textContent = shareUrl;
+            document.getElementById('linkSection').classList.add('show');
+        }
+
+        function copyToClipboard() {
+            const link = document.getElementById('shareLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                const feedback = document.getElementById('copyFeedback');
+                feedback.classList.add('show');
+                setTimeout(() => {
+                    feedback.classList.remove('show');
+                }, 2000);
+            });
+        }
+
+        function shareViaWhatsApp() {
+            const nextRecipient = document.getElementById('nextRecipient').value.trim();
+            const link = document.getElementById('shareLink').textContent;
+            
+            const message = `🔥 ZIM 2026 INREACH GOSPEL MISSION 🔥\n\nTWENZETU CHINANGALI\n\nHey ${nextRecipient}! I'm sending you this Gospel blessing:\n\n"na wote wenye mwili watauona wokovu wa Bwana" (Luke 3:6)\n\nOpen and share with someone you love:\n\n${link}`;
+            
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function startNewGreeting() {
+            document.querySelector('.greeting-section').style.display = 'none';
+            document.querySelector('.initial-section').classList.add('show');
+        }
+    </script>
+</body>
+</html>
